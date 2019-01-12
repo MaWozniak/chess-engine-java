@@ -1,0 +1,12 @@
+- check mate methods
+- code reformat + comments
+
+- class Game (choice:Player vs COM/COM vs COM)
+- proper conditions of Castling move
+- better UI - margins, borders etc
+- Mouse Control - making moves
+- Play with blacks
+- Welcome Frame - with level choice
+hard - depth8-12
+medium - depth4
+easy - depth2 with randomness
