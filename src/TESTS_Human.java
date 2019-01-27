@@ -28,7 +28,7 @@ public class TESTS_Human {
     }
 
     public class ListenForKeys implements KeyListener {
-        int check = 0;
+        int validMove = 0;
 
         @Override
         public void keyTyped(KeyEvent e) {
@@ -44,24 +44,28 @@ public class TESTS_Human {
 
                 Move ENTERED;
 
+                algorithm.GenerateSequences('W');
+                algorithm.CheckCheckmate('W');
+                algorithm.RemoveCheckmates();
 
-                algorithm.board().generateMoves('W', 1);
+                if (move.length() >= 5) {
 
-                for (int i = 0; i < algorithm.board().getMovesDepth1().size(); i++) {
+                    for (int i = 0; i < algorithm.sequences.size(); i++) {
 
-                    if ((algorithm.board().getMovesDepth1().get(i).getPos1_X() == move.charAt(0) - 96) && (algorithm.board().getMovesDepth1().get(i).getPos1_Y() == move.charAt(1) - 48)
-                            && (algorithm.board().getMovesDepth1().get(i).getPos2_X() == move.charAt(3) - 96) && (algorithm.board().getMovesDepth1().get(i).getPos2_Y() == move.charAt(4) - 48)) {
-                        ENTERED = algorithm.board().getMovesDepth1().get(i);
+                        if ((algorithm.sequences.get(i).move(0).getPos1_X() == move.charAt(0) - 96) && (algorithm.sequences.get(i).move(0).getPos1_Y() == move.charAt(1) - 48)
+                                && (algorithm.sequences.get(i).move(0).getPos2_X() == move.charAt(3) - 96) && (algorithm.sequences.get(i).move(0).getPos2_Y() == move.charAt(4) - 48)) {
+                            ENTERED = algorithm.sequences.get(i).move(0);
 
-                        algorithm.board().makeMove('W', ENTERED);
-                        log.whiteMove(ENTERED);
+                            algorithm.board().makeMove('W', ENTERED);
+                            log.whiteMove(ENTERED);
 
-                        check = 1;
+                            validMove = 1;
+                        }
                     }
                 }
 
-                if (check == 0) {
-                    JOptionPane.showMessageDialog(testDisplay, "There's no such a move.\n\nAvailable moves:\n" + algorithm.board().listOfMoves() + "\n\nRemember SPACE between:\n \"e2 e4\" !",
+                if (validMove == 0) {
+                    JOptionPane.showMessageDialog(testDisplay, "There's no such a move.\n\nAvailable moves:\n" + algorithm.listOfMoves('W') + "\n\nRemember SPACE between:\n \"e2 e4\" !",
                             "Ups...", JOptionPane.INFORMATION_MESSAGE);
 
                     input.textInput.setText("");
@@ -82,21 +86,31 @@ public class TESTS_Human {
         public void keyReleased(KeyEvent e) {
             if (e.getKeyChar() == '\n') {
 
-                if (check == 1) {
+                if (validMove == 1) {
                     Move GENERATED;
 
-                    GENERATED = algorithm.makeMove('B', 'b'); //TESTING: 'd'
-                    // GENERATED = algorithm.board().createDepth4('B','W','b');
+                    GENERATED = algorithm.makeMove('B', 'b');
+
+                    if (GENERATED.getSpecialMove() == 100) {
+                        JOptionPane.showMessageDialog(testDisplay, "Congratulations - White Wins!",
+                                "Checkmate", JOptionPane.INFORMATION_MESSAGE);
+                    }
+
 
                     algorithm.board().makeMove('B', GENERATED);
                     log.blackMove(GENERATED);
 
                     testDisplay.setPieces(algorithm.board());
 
+                    if (GENERATED.getCheckmate()) {
+                        JOptionPane.showMessageDialog(testDisplay, "Black Wins",
+                                "Checkmate", JOptionPane.INFORMATION_MESSAGE);
+                    }
+
                     input.textInput.setText("");
                     input.textInput.requestFocus();
 
-                    check = 0;
+                    validMove = 0;
 
                     //END ALGORITHM
                 } else {

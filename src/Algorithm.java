@@ -3,7 +3,7 @@ import java.util.Comparator;
 
 public class Algorithm {
 
-    private ArrayList<Sequence> sequences = new ArrayList<>();
+    public ArrayList<Sequence> sequences = new ArrayList<>();
 
     private ArrayList<Move> movesGenerate = new ArrayList<>();
     private ArrayList<Move> movesDepth1 = new ArrayList<>();
@@ -20,7 +20,13 @@ public class Algorithm {
 
         GenerateSequences(color);
 
+        CheckCheckmate(color);
+
+        RemoveCheckmates();
+
         DepthBuild(4, color, version);
+
+        Randomness(0.008);
         Sort(4);
         //   DepthSecond(8,8, color, version);
         //   Sort(8);
@@ -47,6 +53,65 @@ public class Algorithm {
 
     }
 
+    public void CheckCheckmate(char color) {
+
+        double value1 = 0.0;
+        double value2 = 0.0;
+
+        char sideA = 'W';
+        char sideB = 'B';
+
+        if (color == 'B') {
+            sideA = 'B';
+            sideB = 'W';
+        }
+
+        Board save = new Board();
+        save.copyBoard(this.board);
+
+        for (int i = 0; i < sequences.size(); i++) {
+
+            board.makeMove(sideA, sequences.get(i).move(0));
+
+            value1 = board.value(sideA);
+
+            if (value1 < -50) {
+
+                sequences.get(i).checkmate = true;
+            }
+
+            this.generateMoves(sideB, 2);
+
+            for (int j = 0; j < movesDepth2.size(); j++) {
+
+                board.makeMove(sideB, movesDepth2.get(j));
+
+                value2 = board.value(sideB);
+
+                if (value2 > 50) {
+
+                    sequences.get(i).check = true;
+                }
+
+                board.copyBoard(save);
+                board.makeMove(sideA, sequences.get(i).move(0));
+            }
+
+            board.copyBoard(save);
+        }
+    }
+
+    public void RemoveCheckmates() {
+
+        //Removing sequences with Check or Checkmate
+
+        for (int i = sequences.size() - 1; i >= 0; i--) {
+            if (sequences.get(i).check || sequences.get(i).checkmate) {
+                sequences.remove(i);
+            }
+        }
+    }
+
     public void Sort(int depth) {
 
         Comparator<Sequence> worthD4 = new Comparator<Sequence>() {
@@ -70,6 +135,7 @@ public class Algorithm {
             }
         };
 
+
         if (depth == 4) {
 
             sequences.sort(worthD4);
@@ -79,6 +145,7 @@ public class Algorithm {
             for (int i = 0; i < sequences.size(); i++) {
                 sequences.get(i).move(0).introduce();
                 System.out.print("\t" + sequences.get(i).worthDepth4 + "\t");
+                System.out.print("\t" + sequences.get(i).check + " " + sequences.get(i).checkmate + "\t");
                 sequences.get(i).showSequence();
                 System.out.print("\n");
             }
@@ -110,6 +177,13 @@ public class Algorithm {
                 sequences.get(i).showSequence();
                 System.out.print("\n");
             }
+        }
+    }
+
+    public void Randomness(double size) {
+
+        for (int i = 0; i < sequences.size(); i++) {
+            sequences.get(i).worthDepth4 += (Math.random() - 0.5) * size;
         }
     }
 
@@ -547,7 +621,20 @@ public class Algorithm {
 
     public Move Decision() {
 
-        return sequences.get(0).move(0);
+        //BlackIsChackmated
+        Move BlackIsCheckmated = new Move(0, 0, 0, 0, 0, false, 100);
+
+        Move Decision = BlackIsCheckmated;
+
+        if (sequences.size() != 0) {
+            Decision = sequences.get(0).move(0);
+        }
+        //WhiteisChackmated
+        if (sequences.get(0).worthDepth4 < -50) {
+            Decision.setCheckmate();
+        }
+
+        return Decision;
     }
 
     //////MAIN METHODS/////
@@ -595,6 +682,28 @@ public class Algorithm {
     public Board board() {
 
         return this.board;
+    }
+
+    public String listOfMoves(char color) {
+
+        GenerateSequences(color);
+
+        CheckCheckmate(color);
+
+        RemoveCheckmates();
+
+        String list = "";
+
+        for (int i = 0; i < sequences.size(); i++) {
+
+            list = list + (char) (sequences.get(i).move(0).getPos1_X() + 96) + sequences.get(i).move(0).getPos1_Y() + " - " +
+                    (char) (sequences.get(i).move(0).getPos2_X() + 96) + sequences.get(i).move(0).getPos2_Y() + "     ";
+
+            if ((i - 2) % 3 == 0) {
+                list = list + "\n";
+            }
+        }
+        return list;
     }
 
 }

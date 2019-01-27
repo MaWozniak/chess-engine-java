@@ -4,6 +4,9 @@ public class Sequence {
 
     private ArrayList<Move> sequence = new ArrayList<Move>();
 
+    public boolean check = false;
+    public boolean checkmate = false;
+
     public double worthDepth4 = 200.0;
     public double worthDepth8 = 200.0;
     public double worthDepth12 = 200.0;

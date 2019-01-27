@@ -10,6 +10,7 @@ public class Move
     private int pos2_Y = 0;
     private boolean capture = false;
     private int specialMove = 0;
+    private boolean chackmate = false;
 
     //algorithm
     public double worthDepth4 = 0.0;
@@ -29,6 +30,7 @@ public class Move
         this.pos2_X = X2;
         this.pos2_Y = Y2;
         this.capture = takePiece;
+        this.chackmate = false;
     }
 
     public Move(int piece, int X1, int Y1, int X2, int Y2, boolean takePiece, int specialMove) {
@@ -39,6 +41,7 @@ public class Move
         this.pos2_Y = Y2;
         this.capture = takePiece;
         this.specialMove = specialMove;
+        this.chackmate = false;
     }
 
     public Move() {
@@ -84,6 +87,14 @@ public class Move
         for (int i = 0; i < this.sequence.size(); i++) {
             this.sequence.get(i).introduceShort();
         }
+    }
+
+    public boolean getCheckmate() {
+        return chackmate;
+    }
+
+    public void setCheckmate() {
+        this.chackmate = true;
     }
 
     public String pieceInitial() {
