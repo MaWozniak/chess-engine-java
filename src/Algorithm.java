@@ -106,7 +106,7 @@ public class Algorithm {
         //Removing sequences with Check or Checkmate
 
         for (int i = sequences.size() - 1; i >= 0; i--) {
-            if (sequences.get(i).check || sequences.get(i).checkmate) {
+            if (sequences.get(i).check) {
                 sequences.remove(i);
             }
         }
