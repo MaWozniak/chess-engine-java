@@ -26,10 +26,12 @@ public class Algorithm {
 
         DepthBuild(4, color, version);
 
-        Randomness(0.008);
+        //Randomness(0.008);
         Sort(4);
-        //   DepthSecond(8,8, color, version);
-        //   Sort(8);
+
+        DepthSecond(4, 8, color, version); // normal: 8, 8, color, version
+
+        Sort(8);
         //for depth8 s=5; depth12 s=3
         //DepthSecond(5, 12, color, version);
         //Sort(12);
@@ -180,6 +182,7 @@ public class Algorithm {
         }
     }
 
+    //copy version from Chess Online
     public void Randomness(double size) {
 
         for (int i = 0; i < sequences.size(); i++) {
@@ -481,6 +484,10 @@ public class Algorithm {
                             }
 
                             board.copyBoard(save);
+                            board.makeMove(sideA, sequences.get(s).move(depth - 8));
+                            board.makeMove(sideB, sequences.get(s).move(depth - 7));
+                            board.makeMove(sideA, sequences.get(s).move(depth - 6));
+                            board.makeMove(sideB, sequences.get(s).move(depth - 5));
                             board.makeMove(sideA, movesDepth1.get(i));
                             board.makeMove(sideB, movesDepth2.get(j));
                             board.makeMove(sideA, movesDepth3.get(k));
@@ -500,6 +507,10 @@ public class Algorithm {
                         bestSideB_2 = -200.0;
 
                         board.copyBoard(save);
+                        board.makeMove(sideA, sequences.get(s).move(depth - 8));
+                        board.makeMove(sideB, sequences.get(s).move(depth - 7));
+                        board.makeMove(sideA, sequences.get(s).move(depth - 6));
+                        board.makeMove(sideB, sequences.get(s).move(depth - 5));
                         board.makeMove(sideA, movesDepth1.get(i));
                         board.makeMove(sideB, movesDepth2.get(j));
 
@@ -533,6 +544,10 @@ public class Algorithm {
 
                     //restart to position before:
                     board.copyBoard(save);
+                    board.makeMove(sideA, sequences.get(s).move(depth - 8));
+                    board.makeMove(sideB, sequences.get(s).move(depth - 7));
+                    board.makeMove(sideA, sequences.get(s).move(depth - 6));
+                    board.makeMove(sideB, sequences.get(s).move(depth - 5));
                     board.makeMove(sideA, movesDepth1.get(i));
 
                     //END OF movesDepth2
