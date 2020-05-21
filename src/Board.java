@@ -187,13 +187,15 @@ public class Board {
         blackScore = 0;
 
         for (int i = 0; i < 19; i++) {
-            //scores from pawn
             whiteScore += whitePieces[i].getScore();
         }
         for (int i = 0; i < 19; i++) {
-            //scores from pawn
             blackScore += blackPieces[i].getScore();
+
         }
+
+        whiteScore += positionalValue('W');
+        blackScore += positionalValue('B');
 
         if (color == 'W') {
             score = whiteScore - blackScore;
@@ -209,12 +211,189 @@ public class Board {
         return score;
     }
 
-    //it's only example for future work
-    /*public double value(Move move)
-    {
-        this.whiteMove(move); //INCORRECT!
-        return this.value();
-    }*/
+    public double value(char color, boolean positional) {
+        whiteScore = 0;
+        blackScore = 0;
+
+        if(positional) {
+            for (int i = 0; i < 19; i++) {
+                whiteScore += whitePieces[i].getScore();
+            }
+            for (int i = 0; i < 19; i++) {
+                blackScore += blackPieces[i].getScore();
+            }
+
+            whiteScore += positionalValue('W');
+            System.out.println("whiteScore positionalValue: "+df.format(positionalValue('W')));
+            blackScore += positionalValue('B');
+            System.out.println("blackScore positionalValue: "+df.format(positionalValue('B')));
+
+            if (color == 'W') {
+                score = whiteScore - blackScore;
+            }
+            if (color == 'B') {
+                score = blackScore - whiteScore;
+            }
+        }
+        return score;
+
+    }
+
+    public double positionalValue(char color) {
+        //test
+//        if(whitePieces[9].isAlive()) {
+//            System.out.println("Knight DISTANCE KING: "+df.format(distanceBetweenPieces(whitePieces[9], blackPieces[12])));
+//            System.out.println("Knight x DISTANCE KING: "+df.format(xDistanceBetweenPieces(whitePieces[9], blackPieces[12])));
+//            System.out.println("Knight y DISTANCE KING: "+df.format(yDistanceBetweenPieces(whitePieces[9], blackPieces[12])));
+//            System.out.println("Knight diagonal distance: "+df.format(diagonalDistance(whitePieces[9], blackPieces[12])));
+//            System.out.println("Knight black pieces on line X: "+df.format(piecesBetweenOnLineY('B', whitePieces[9], blackPieces[12])));
+//            System.out.println("Knight white pieces on line X: "+df.format(piecesBetweenOnLineY('W', whitePieces[9], blackPieces[12])));
+//        }
+        double result = 0;
+        if(color == 'W') {
+            for (int i = 0; i < 12; i++) {
+                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 7) {
+                    result += 0.3;
+                }
+                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 5) {
+                    result += 0.6;
+                }
+                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 4) {
+                    result += 0.6;
+                }
+                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 3) {
+                    result += 0.6;
+                }
+            }
+            for (int i = 13; i < 19; i++) {
+                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 7) {
+                    result += 0.3;
+                }
+                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 5) {
+                    result += 0.6;
+                }
+                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 4) {
+                    result += 0.6;
+                }
+                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 3) {
+                    result += 0.6;
+                }
+            }
+            if(diagonalDistance(whitePieces[10], blackPieces[12]) < 2) {
+                result += 1.1;
+            }
+            if(diagonalDistance(whitePieces[13], blackPieces[12]) < 2) {
+                result += 1.1;
+            }
+        }
+        if(color == 'B') {
+            for (int i = 0; i < 12; i++) {
+                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 7) {
+                    result += 0.3;
+                }
+                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 5) {
+                    result += 0.6;
+                }
+                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 4) {
+                    result += 0.6;
+                }
+                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 3) {
+                    result += 0.6;
+                }
+            }
+            for (int i = 13; i < 19; i++) {
+                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 7) {
+                    result += 0.3;
+                }
+                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 5) {
+                    result += 0.6;
+                }
+                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 4) {
+                    result += 0.6;
+                }
+                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 3) {
+                    result += 0.6;
+                }
+            }
+            if(diagonalDistance(blackPieces[10], whitePieces[12]) < 2) {
+                result += 1.1;
+            }
+            if(diagonalDistance(blackPieces[13], whitePieces[12]) < 2) {
+                result += 1.1;
+            }
+        }
+        return result/5;
+    }
+
+    public double distanceBetweenPieces(Piece piece1, Piece piece2) {
+        int x1 = piece1.getPosX();
+        int y1 = piece1.getPosY();
+        int x2 = piece2.getPosX();
+        int y2 = piece2.getPosY();
+        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+    }
+
+    public double xDistanceBetweenPieces(Piece piece1, Piece piece2) {
+        int x1 = piece1.getPosX();
+        int x2 = piece2.getPosX();
+        return Math.abs(x2 - x1);
+    }
+
+    public double yDistanceBetweenPieces(Piece piece1, Piece piece2) {
+        int y1 = piece1.getPosY();
+        int y2 = piece2.getPosY();
+        return Math.abs(y2 - y1);
+    }
+
+    public double diagonalDistance(Piece piece1, Piece piece2) {
+        int x1 = piece1.getPosX();
+        int y1 = piece1.getPosY();
+        int x2 = piece2.getPosX();
+        int y2 = piece2.getPosY();
+        return Math.abs(Math.abs(x1 - y1) - Math.abs(x2 - y2)) + 8 - Math.abs(x1 + y1 - x2 - y2);
+    }
+
+    public int piecesBetweenOnLineY(char color, Piece piece1, Piece piece2) {
+        int result = 0;
+        int x1 = piece1.getPosX();
+        int y1 = piece1.getPosY();
+        int x2 = piece2.getPosX();
+        int y2 = piece2.getPosY();
+        if( y1 < y2 ) {
+            if(color == 'B') {
+                for (int i = 0; i < 19; i++) {
+                    if((blackPieces[i].getPosX() == x1)&&(blackPieces[i].getPosY() > y1)) {
+                        result ++;
+                    }
+                }
+            }
+            if(color == 'W') {
+                for (int i = 0; i < 19; i++) {
+                    if((whitePieces[i].getPosX() == x1)&&(whitePieces[i].getPosY() > y1)) {
+                        result ++;
+                    }
+                }
+            }
+
+        } else {
+            if(color == 'B') {
+                for (int i = 0; i < 19; i++) {
+                    if((blackPieces[i].getPosX() == x1)&&(blackPieces[i].getPosY() < y1)) {
+                        result ++;
+                    }
+                }
+            }
+            if(color == 'W') {
+                for (int i = 0; i < 19; i++) {
+                    if((whitePieces[i].getPosX() == x1)&&(whitePieces[i].getPosY() < y1)) {
+                        result ++;
+                    }
+                }
+            }
+
+        }
+        return result;
+    }
 
     public void generateMoves(char color, int movesDepth) {
         this.createPositionsArray();

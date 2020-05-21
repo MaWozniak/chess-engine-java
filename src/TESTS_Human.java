@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class TESTS_Human {
 
@@ -10,7 +13,6 @@ public class TESTS_Human {
     private Input input = new Input();
 
     private Algorithm algorithm = new Algorithm();
-
 
     public static void main(String[] args) {
         new TESTS_Human();

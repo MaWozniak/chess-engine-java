@@ -32,6 +32,12 @@ public class Algorithm {
         DepthSecond(4, 8, color, version); // normal: 8, 8, color, version
 
         Sort(8);
+
+        //////////////////////////////////////////////////////////////
+        //FOR TESTING PURPOSE
+        board.value('W', true);
+        //////////////////////////////////////////////////////////////
+
         //for depth8 s=5; depth12 s=3
         //DepthSecond(5, 12, color, version);
         //Sort(12);
@@ -362,7 +368,6 @@ public class Algorithm {
             sequences.get(i).worthDepth4 = worth;
             sequences.get(i).bestBeta4 = bestBeta;
             sequences.get(i).avrgBeta4 = avaregeBeta;
-
 
             if (worth < bestWorth) {
                 bestWorth = worth;
