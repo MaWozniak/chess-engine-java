@@ -405,6 +405,7 @@ public class Algorithm {
         double worstBeta = 200.0;
         double avaregeBeta = 0.0;
         int counterBeta = 0;
+        int searchSize = search;
 
         char sideA = 'W';
         char sideB = 'B';
@@ -418,8 +419,11 @@ public class Algorithm {
         save.copyBoard(this.board);
 
         //ALGORITHM:
+        if(searchSize > sequences.size()) {
+            searchSize = sequences.size();
+        }
 
-        for (int s = 0; s < search; s++) {
+        for (int s = 0; s < searchSize; s++) {
 
             //temporary moves for saving best sequences
             Move tempSeqDepth1 = new Move();
