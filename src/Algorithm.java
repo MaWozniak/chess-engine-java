@@ -29,7 +29,7 @@ public class Algorithm {
         //Randomness(0.008);
         Sort(4);
 
-        DepthSecond(4, 8, color, version); // normal: 8, 8, color, version
+        DepthSecond(8, 8, color, version); // normal: 8, 8, color, version
 
         Sort(8);
 

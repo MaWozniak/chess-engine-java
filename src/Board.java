@@ -2,6 +2,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class Board {
     public Piece[] whitePieces = new Piece[19];
@@ -250,79 +251,38 @@ public class Board {
 //            System.out.println("Knight white pieces on line X: "+df.format(piecesBetweenOnLineY('W', whitePieces[9], blackPieces[12])));
 //        }
         double result = 0;
+        Piece[] piecesA = new Piece[19];
+        Piece[] piecesB = new Piece[19];
         if(color == 'W') {
-            for (int i = 0; i < 12; i++) {
-                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 7) {
-                    result += 0.3;
-                }
-                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 5) {
-                    result += 0.6;
-                }
-                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 4) {
-                    result += 0.6;
-                }
-                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 3) {
-                    result += 0.6;
-                }
-            }
-            for (int i = 13; i < 19; i++) {
-                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 7) {
-                    result += 0.3;
-                }
-                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 5) {
-                    result += 0.6;
-                }
-                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 4) {
-                    result += 0.6;
-                }
-                if(distanceBetweenPieces(whitePieces[i], blackPieces[12]) < 3) {
-                    result += 0.6;
-                }
-            }
-            if(diagonalDistance(whitePieces[10], blackPieces[12]) < 2) {
-                result += 1.1;
-            }
-            if(diagonalDistance(whitePieces[13], blackPieces[12]) < 2) {
-                result += 1.1;
-            }
+            piecesA = whitePieces;
+            piecesB = blackPieces;
         }
         if(color == 'B') {
-            for (int i = 0; i < 12; i++) {
-                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 7) {
-                    result += 0.3;
+            piecesA = blackPieces;
+            piecesB = whitePieces;
+        }
+        for (int i = 0; i < 19; i++) {
+            if(piecesA[i].isAlive()){
+                //pawns
+                if(i < 8) {
+                    result += (10 - distanceBetweenPieces(piecesA[i], piecesB[12])) / 5;
                 }
-                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 5) {
-                    result += 0.6;
+                //knights + queens
+                if((i == 9)||(i == 11)||(i == 14)||(i == 16)||(i == 17)||(i == 18)) {
+                    result += (10 - distanceBetweenPieces(piecesA[i], piecesB[12]));
                 }
-                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 4) {
-                    result += 0.6;
+                //rocks
+                if((i == 8)||(i == 15)) {
+                    result += (10 - xDistanceBetweenPieces(piecesA[i], piecesB[12])) / 3;
                 }
-                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 3) {
-                    result += 0.6;
+                //bishops
+                if((i == 10)||(i == 13)) {
+                    result += (10 - diagonalDistance(piecesA[i], piecesB[12])) / 2;
                 }
-            }
-            for (int i = 13; i < 19; i++) {
-                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 7) {
-                    result += 0.3;
-                }
-                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 5) {
-                    result += 0.6;
-                }
-                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 4) {
-                    result += 0.6;
-                }
-                if(distanceBetweenPieces(blackPieces[i], whitePieces[12]) < 3) {
-                    result += 0.6;
-                }
-            }
-            if(diagonalDistance(blackPieces[10], whitePieces[12]) < 2) {
-                result += 1.1;
-            }
-            if(diagonalDistance(blackPieces[13], whitePieces[12]) < 2) {
-                result += 1.1;
             }
         }
-        return result/5;
+
+        return result/1;
     }
 
     public double distanceBetweenPieces(Piece piece1, Piece piece2) {
