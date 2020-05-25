@@ -1,14 +1,14 @@
 public class TestBoards {
 
-    public Board test0 = new Board(); //Start position
-    public Board test1 = new Board(); //empty board
-    public Board test2 = new Board();
-    public Board test3 = new Board();
-    public Board test4 = new Board();
-    public Board test5 = new Board();
-    public Board test6 = new Board();
-    public Board test7 = new Board();
-    public Board test8 = new Board();
+    public Board test0 = new Board(""); //Start position
+    public Board test1 = new Board(""); //empty board
+    public Board test2 = new Board("");
+    public Board test3 = new Board("");
+    public Board test4 = new Board("");
+    public Board test5 = new Board("");
+    public Board test6 = new Board("");
+    public Board test7 = new Board("");
+    public Board test8 = new Board("");
 
     TestBoards() {
         //test0

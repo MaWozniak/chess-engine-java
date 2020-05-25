@@ -11,6 +11,7 @@ public class Board {
     private double score = 0.0;
     private double whiteScore = 0.0;
     private double blackScore = 0.0;
+    private String version;
 
     public int[][] position = new int[9][9];
 
@@ -33,7 +34,8 @@ public class Board {
     final DecimalFormat df = new DecimalFormat("#0.000");
     private double value4response;
 
-    public Board() {
+    public Board(String version) {
+        this.version = version;
         whitePieces[0] = new Piece(true, 'W', 1, 2);
         whitePieces[1] = new Piece(true, 'W', 2, 2);
         whitePieces[2] = new Piece(true, 'W', 3, 2);
@@ -73,6 +75,7 @@ public class Board {
         blackPieces[16] = new Queen(false, 'B', 6, 1); //for change on last line
         blackPieces[17] = new Queen(false, 'B', 7, 1); //for change on last line
         blackPieces[18] = new Queen(false, 'B', 8, 1); //for change on last line
+
     }
 
     public Piece getWhitePiece(int index) {
@@ -200,14 +203,14 @@ public class Board {
 
         if (color == 'W') {
             score = whiteScore - blackScore;
+           // score += positionalValue('W');
+           // score -= positionalValue('B')/5;
         }
         if (color == 'B') {
             score = blackScore - whiteScore;
+           // score += positionalValue('B');
+           // score -= positionalValue('W')/5;
         }
-
-        //System.out.println("VP: "+df.format(score)+" ( "+df.format(whiteScore)+":"+df.format(blackScore)+" )"); //df it's DecimalFormat
-        //for (int i=0; i<8; i++) { System.out.println("pawn W "+i+" - "+df.format(whitePawns[i].getScore())); }
-        //for (int i=0; i<8; i++) { System.out.println("pawn B "+i+" - "+df.format(blackPawns[i].getScore())); }
 
         return score;
     }
@@ -241,48 +244,87 @@ public class Board {
     }
 
     public double positionalValue(char color) {
-        //test
-//        if(whitePieces[9].isAlive()) {
-//            System.out.println("Knight DISTANCE KING: "+df.format(distanceBetweenPieces(whitePieces[9], blackPieces[12])));
-//            System.out.println("Knight x DISTANCE KING: "+df.format(xDistanceBetweenPieces(whitePieces[9], blackPieces[12])));
-//            System.out.println("Knight y DISTANCE KING: "+df.format(yDistanceBetweenPieces(whitePieces[9], blackPieces[12])));
-//            System.out.println("Knight diagonal distance: "+df.format(diagonalDistance(whitePieces[9], blackPieces[12])));
-//            System.out.println("Knight black pieces on line X: "+df.format(piecesBetweenOnLineY('B', whitePieces[9], blackPieces[12])));
-//            System.out.println("Knight white pieces on line X: "+df.format(piecesBetweenOnLineY('W', whitePieces[9], blackPieces[12])));
-//        }
+        double behindLine = 1;
         double result = 0;
+        int lastLine = 8;
         Piece[] piecesA = new Piece[19];
         Piece[] piecesB = new Piece[19];
         if(color == 'W') {
             piecesA = whitePieces;
             piecesB = blackPieces;
+            behindLine = -1;
+            lastLine = 8;
         }
         if(color == 'B') {
             piecesA = blackPieces;
             piecesB = whitePieces;
+            behindLine = 1;
+            lastLine = 1;
         }
-        for (int i = 0; i < 19; i++) {
-            if(piecesA[i].isAlive()){
-                //pawns
-                if(i < 8) {
-                    result += (10 - distanceBetweenPieces(piecesA[i], piecesB[12])) / 5;
+
+        if(version.equals("positional1")) {
+            for (int i = 0; i < 19; i++) {
+                if(piecesA[i].isAlive()){
+                    //pawns
+//                    if(i < 19) {
+//                        result += (10 - distanceBetweenPieces(piecesA[i], piecesB[12])) / 10;
+//                    }
+
+                    //covering by pawns
+                    for (int j = 0; j < 8; j++) {
+                        if((piecesA[j].getPosY() == piecesA[i].getPosY() + behindLine)&&(
+                                ((piecesA[j].getPosX() == piecesA[i].getPosX() -1))||(piecesA[j].getPosX() == piecesA[i].getPosX() +1))){
+                            result += 0.1;
+                        }
+                    }
+
+                    //passing pawn to 8 line
+                    if( i < 8) {
+                        result += (double)(8 - yDistanceToLine(piecesA[i], lastLine))/4;
+                    }
+                    if(( i > 1)&( i < 6 )) {
+                        result += (double)(8 - yDistanceToLine(piecesA[i], lastLine))/3;
+                    }
+
+                    //safety king
+                    if( i == 12) {
+                        result += distanceBetweenPieces(piecesA[12], piecesB[i])/3;
+                    }
+
+                    //knights + queens
+                    if((i == 9)||(i == 11)||(i == 14)||(i == 16)||(i == 17)||(i == 18)) {
+                        result += (10 - distanceBetweenPieces(piecesA[i], piecesB[12]))/3;
+                    }
+
+//                    if( i < 8) {
+//                        result += (10 - distanceBetweenPieces(piecesA[i], piecesB[12])) / 2;
+//                    }
                 }
-                //knights + queens
-                if((i == 9)||(i == 11)||(i == 14)||(i == 16)||(i == 17)||(i == 18)) {
-                    result += (10 - distanceBetweenPieces(piecesA[i], piecesB[12]));
-                }
-                //rocks
-                if((i == 8)||(i == 15)) {
-                    result += (10 - xDistanceBetweenPieces(piecesA[i], piecesB[12])) / 3;
-                }
-                //bishops
-                if((i == 10)||(i == 13)) {
-                    result += (10 - diagonalDistance(piecesA[i], piecesB[12])) / 2;
-                }
+//                if(piecesA[i].isAlive()){
+//                    //pawns
+//                    if(i < 8) {
+//                        result += (10 - distanceBetweenPieces(piecesA[i], piecesB[12])) / 10;
+//                    }
+//                    if(i < 8) {
+//                        result += (10 - yDistanceBetweenPieces(piecesA[i], piecesB[12])) / 2;
+//                    }
+//                    //knights + queens
+//                    if((i == 9)||(i == 11)||(i == 14)||(i == 16)||(i == 17)||(i == 18)) {
+//                        result += (10 - distanceBetweenPieces(piecesA[i], piecesB[12]));
+//                    }
+//                    //rocks
+//                    if((i == 8)||(i == 15)) {
+//                        result += (10 - xDistanceBetweenPieces(piecesA[i], piecesB[12])) / 10;
+//                    }
+//                    //bishops
+//                    if((i == 10)||(i == 13)) {
+//                        result += (10 - diagonalDistance(piecesA[i], piecesB[12])) / 5;
+//                    }
+//                }
             }
         }
 
-        return result/1;
+        return result/4;
     }
 
     public double distanceBetweenPieces(Piece piece1, Piece piece2) {
@@ -311,6 +353,11 @@ public class Board {
         int x2 = piece2.getPosX();
         int y2 = piece2.getPosY();
         return Math.abs(Math.abs(x1 - y1) - Math.abs(x2 - y2)) + 8 - Math.abs(x1 + y1 - x2 - y2);
+    }
+
+    public int yDistanceToLine (Piece piece, int line) {
+        int y1 = piece.getPosY();
+        return Math.abs(line - y1);
     }
 
     public int piecesBetweenOnLineY(char color, Piece piece1, Piece piece2) {
@@ -419,7 +466,7 @@ public class Board {
     }
 
     public void selectionMoves(char color, int movesDepth) {
-        Board save2 = new Board();
+        Board save2 = new Board(this.version);
 
         movesGenerate.clear();
         movesSelected.clear();

@@ -12,7 +12,7 @@ public class TESTS_Human {
     private GameLog log = new GameLog();
     private Input input = new Input();
 
-    private Algorithm algorithm = new Algorithm();
+    private Algorithm algorithm = new Algorithm("brute force");
 
     public static void main(String[] args) {
         new TESTS_Human();

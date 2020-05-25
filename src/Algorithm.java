@@ -10,10 +10,12 @@ public class Algorithm {
     private ArrayList<Move> movesDepth2 = new ArrayList<>();
     private ArrayList<Move> movesDepth3 = new ArrayList<>();
     private ArrayList<Move> movesDepth4 = new ArrayList<>();
+    private String version;
+    private Board board;
 
-    private Board board = new Board();
-
-    public Algorithm() {
+    public Algorithm(String version) {
+        board = new Board(version);
+        this.version = version;
     }
 
     public Move makeMove(char color, char version) {
@@ -74,7 +76,7 @@ public class Algorithm {
             sideB = 'W';
         }
 
-        Board save = new Board();
+        Board save = new Board(version);
         save.copyBoard(this.board);
 
         for (int i = 0; i < sequences.size(); i++) {
@@ -221,7 +223,7 @@ public class Algorithm {
             sideB = 'W';
         }
 
-        Board save = new Board();
+        Board save = new Board(this.version);
         save.copyBoard(this.board);
 
         //ALGORITHM:
@@ -415,7 +417,7 @@ public class Algorithm {
             sideB = 'W';
         }
 
-        Board save = new Board();
+        Board save = new Board(this.version);
         save.copyBoard(this.board);
 
         //ALGORITHM:
