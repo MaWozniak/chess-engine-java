@@ -59,6 +59,7 @@ public class TESTS_Human {
                             ENTERED = algorithm.sequences.get(i).move(0);
 
                             algorithm.board().makeMove('W', ENTERED);
+                            algorithm.addRecordMove(ENTERED);
                             log.whiteMove(ENTERED);
 
                             validMove = 1;
@@ -100,6 +101,7 @@ public class TESTS_Human {
 
 
                     algorithm.board().makeMove('B', GENERATED);
+                    algorithm.addRecordMove(GENERATED);
                     log.blackMove(GENERATED);
 
                     testDisplay.setPieces(algorithm.board());

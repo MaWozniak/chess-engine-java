@@ -40,7 +40,9 @@ public class TESTS_COMvsCOM {
                     Move GENERATED;
                     GENERATED = algorithmW.makeMove('W', 'b');
                     algorithmW.board().makeMove('W', GENERATED);
+                    algorithmW.addRecordMove(GENERATED);
                     algorithmB.board().makeMove('W', GENERATED);
+                    algorithmB.addRecordMove(GENERATED);
                     log.whiteMove(GENERATED);
                     testDisplay.setPieces(algorithmW.board());
 
@@ -48,7 +50,9 @@ public class TESTS_COMvsCOM {
                     Move GENERATED2;
                     GENERATED2 = algorithmB.makeMove('B', 'b');
                     algorithmB.board().makeMove('B', GENERATED2);
+                    algorithmB.addRecordMove(GENERATED2);
                     algorithmW.board().makeMove('B', GENERATED2);
+                    algorithmW.addRecordMove(GENERATED2);
                     log.blackMove(GENERATED2);
                     testDisplay.setPieces(algorithmB.board());
 

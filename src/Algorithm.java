@@ -4,6 +4,7 @@ import java.util.Comparator;
 public class Algorithm {
 
     public ArrayList<Sequence> sequences = new ArrayList<>();
+    public ArrayList<Move> movesRecord = new ArrayList<>();
 
     private ArrayList<Move> movesGenerate = new ArrayList<>();
     private ArrayList<Move> movesDepth1 = new ArrayList<>();
@@ -16,6 +17,10 @@ public class Algorithm {
     public Algorithm(String version) {
         board = new Board(version);
         this.version = version;
+    }
+
+    public void addRecordMove(Move move) {
+        movesRecord.add(move);
     }
 
     public Move makeMove(char color, char version) {
@@ -35,6 +40,8 @@ public class Algorithm {
 
         Sort(8);
 
+        removeRepetitions(8);
+
         //////////////////////////////////////////////////////////////
         //FOR TESTING PURPOSE
         board.value('W', true);
@@ -45,6 +52,48 @@ public class Algorithm {
         //Sort(12);
 
         return Decision();
+    }
+
+    public void removeRepetitions(int depth) {
+        int gameLenght = movesRecord.size();
+        if(gameLenght > 8) {
+            if ((sequences.size() > 1)&&(sequences.get(0).move(0).mirrorEquals(movesRecord.get(gameLenght - 2)))) {
+                sequences.get(0).worthDepth4 += 0.2;
+                sequences.get(0).worthDepth8 += 0.2;
+                sequences.get(0).worthDepth12 += 0.2;
+                sequences.get(1).worthDepth4 += 0.1;
+                sequences.get(1).worthDepth8 += 0.1;
+                sequences.get(1).worthDepth12 += 0.1;
+            }
+            if ((sequences.size() > 1)&&(sequences.get(0).move(0).equals(movesRecord.get(gameLenght - 4)))) {
+                sequences.get(0).worthDepth4 += 0.9;
+                sequences.get(0).worthDepth8 += 0.9;
+                sequences.get(0).worthDepth12 += 0.9;
+                sequences.get(1).worthDepth4 += 0.5;
+                sequences.get(1).worthDepth8 += 0.5;
+                sequences.get(1).worthDepth12 += 0.5;
+            }
+            Sort(depth);
+            if ((sequences.size() > 1)&&(sequences.get(0).move(0).mirrorEquals(movesRecord.get(gameLenght - 6)))) {
+                sequences.get(0).worthDepth4 += 0.5;
+                sequences.get(0).worthDepth8 += 0.5;
+                sequences.get(0).worthDepth12 += 0.5;
+                sequences.get(1).worthDepth4 += 0.3;
+                sequences.get(1).worthDepth8 += 0.3;
+                sequences.get(1).worthDepth12 += 0.3;
+            }
+            Sort(depth);
+            if ((sequences.size() > 1)&&(sequences.get(0).move(0).equals(movesRecord.get(gameLenght - 8)))) {
+                sequences.get(0).worthDepth4 += 1.2;
+                sequences.get(0).worthDepth8 += 1.2;
+                sequences.get(0).worthDepth12 += 1.2;
+                sequences.get(1).worthDepth4 += 1.0;
+                sequences.get(1).worthDepth8 += 1.0;
+                sequences.get(1).worthDepth12 += 1.0;
+            }
+            Sort(depth);
+        }
+
     }
 
     //////MAIN METHODS/////

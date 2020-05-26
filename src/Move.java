@@ -117,5 +117,23 @@ public class Move
         return initial;
     }
 
+    public boolean equals(Move move) {
+        boolean result = false;
+        if((this.pos1_X == move.pos1_X)&&(this.pos2_X == move.pos2_X) &&(this.pos1_Y == move.pos1_Y)
+                &&(this.pos2_Y == move.pos2_Y)&&(this.pieceIndex == move.pieceIndex)) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean mirrorEquals(Move move) {
+        boolean result = false;
+        if((this.pos1_X == move.pos2_X)&&(this.pos2_X == move.pos1_X) &&(this.pos1_Y == move.pos2_Y)
+                &&(this.pos2_Y == move.pos1_Y)&&(this.pieceIndex == move.pieceIndex)) {
+            result = true;
+        }
+        return result;
+    }
+
 
 }
