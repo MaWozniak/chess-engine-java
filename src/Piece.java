@@ -177,62 +177,63 @@ public class Piece {
             //Pawn value = 1.0
             value += 1.0;
 
+//WIP: comment out simply positional values
 
-            //Whites score:
-            if (this.color == 'W') {
-                //Position - center
-                if ((this.posX > 2 && this.posX < 7) && ((this.posY == 3) || (this.posY == 4))) {
-                    value += 0.001;
-                }
-                //Position - strict center
-                if ((this.posX == 4 || this.posX == 5) && ((this.posY == 4) || (this.posY == 5))) {
-                    value += 0.002;
-                }
-                //Position - moving foward
-                value += ((this.posY - 2.0) / 1000.0);
-                //Position - close to last line (2 lines)
-                if (this.posY == 6) {
-                    value += 0.01;
-                }
-                //Position - close to last line (1 line)
-                if (this.posY == 7) {
-                    value += 0.2;
-                }
-                //Position - last line -> change to Figure
-                if (this.posY == 8) {
-                    value += 7.0;
-                }
-                //+-Position - empty line ahead (witout opposite pawn)
-                //+-Defence - cover by other pawn
-            }
-
-            //Blacks score:
-            if (this.color == 'B') {
-                //Position - center
-                if ((this.posX > 2 && this.posX < 7) && ((this.posY == 6) || (this.posY == 5))) {
-                    value += 0.001;
-                }
-                //Position - strict center
-                if ((this.posX == 4 || this.posX == 5) && ((this.posY == 4) || (this.posY == 5))) {
-                    value += 0.002;
-                }
-                //Position - moving foward
-                value += ((7.0 - this.posY) / 1000.0);
-                //Position - close to last line (2 lines)
-                if (this.posY == 3) {
-                    value += 0.01;
-                }
-                //Position - close to last line (1 line)
-                if (this.posY == 2) {
-                    value += 0.2;
-                }
-                //Position - last line -> change to Figure
-                if (this.posY == 1) {
-                    value += 7.0;
-                }
-                //+-Position - empty line ahead (witout opposite pawn)
-                //+-Defence - cover by other pawn
-            }
+//            //Whites score:
+//            if (this.color == 'W') {
+//                //Position - center
+//                if ((this.posX > 2 && this.posX < 7) && ((this.posY == 3) || (this.posY == 4))) {
+//                    value += 0.001;
+//                }
+//                //Position - strict center
+//                if ((this.posX == 4 || this.posX == 5) && ((this.posY == 4) || (this.posY == 5))) {
+//                    value += 0.002;
+//                }
+//                //Position - moving foward
+//                value += ((this.posY - 2.0) / 1000.0);
+//                //Position - close to last line (2 lines)
+//                if (this.posY == 6) {
+//                    value += 0.01;
+//                }
+//                //Position - close to last line (1 line)
+//                if (this.posY == 7) {
+//                    value += 0.2;
+//                }
+//                //Position - last line -> change to Figure
+//                if (this.posY == 8) {
+//                    value += 7.0;
+//                }
+//                //+-Position - empty line ahead (witout opposite pawn)
+//                //+-Defence - cover by other pawn
+//            }
+//
+//            //Blacks score:
+//            if (this.color == 'B') {
+//                //Position - center
+//                if ((this.posX > 2 && this.posX < 7) && ((this.posY == 6) || (this.posY == 5))) {
+//                    value += 0.001;
+//                }
+//                //Position - strict center
+//                if ((this.posX == 4 || this.posX == 5) && ((this.posY == 4) || (this.posY == 5))) {
+//                    value += 0.002;
+//                }
+//                //Position - moving foward
+//                value += ((7.0 - this.posY) / 1000.0);
+//                //Position - close to last line (2 lines)
+//                if (this.posY == 3) {
+//                    value += 0.01;
+//                }
+//                //Position - close to last line (1 line)
+//                if (this.posY == 2) {
+//                    value += 0.2;
+//                }
+//                //Position - last line -> change to Figure
+//                if (this.posY == 1) {
+//                    value += 7.0;
+//                }
+//                //+-Position - empty line ahead (witout opposite pawn)
+//                //+-Defence - cover by other pawn
+//            }
 
             /*
             //Whites score:

@@ -198,8 +198,8 @@ public class Board {
 
         }
 
-        whiteScore += positionalValue('W');
-        blackScore += positionalValue('B');
+//        whiteScore += positionalValue('W');
+//        blackScore += positionalValue('B');
 
         if (color == 'W') {
             score = whiteScore - blackScore;

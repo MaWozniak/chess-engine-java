@@ -76,7 +76,7 @@ public class Move
     }
 
     public void introduce() {
-        System.out.print(" p-" + (this.pieceIndex + 1) + "  " + (char) (this.pos1_X + 96) + this.pos1_Y + " - " + (char) (this.pos2_X + 96) + this.pos2_Y + "  " + this.capture);
+        System.out.print(" p-" + (this.pieceIndex + 1) + "  " + (char) (this.pos1_X + 96) + this.pos1_Y + " - " + (char) (this.pos2_X + 96) + this.pos2_Y + "  capture: " + this.capture);
     }
 
     public void introduceShort() {

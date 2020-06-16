@@ -17,11 +17,14 @@ public class Knight extends Piece {
     public double getScore() {
         double value = 0.0;
 
-        if (this.alive) {
 
-            if ((this.posX > 2 && this.posX < 7) && (this.posY > 2 && this.posY < 7)) {
-                value += 0.005;
-            }
+
+        if (this.alive) {
+//WIP: comment out simply positional values
+
+//            if ((this.posX > 2 && this.posX < 7) && (this.posY > 2 && this.posY < 7)) {
+//                value += 0.005;
+//            }
 
             value += 3.0;
         }

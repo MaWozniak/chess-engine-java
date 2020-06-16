@@ -7,6 +7,8 @@ public class Sequence {
     public boolean check = false;
     public boolean checkmate = false;
 
+    public double firstValue = 0.0;
+    public ArrayList<Double> firstResponces = new ArrayList<Double>();
     public double worthDepth4 = 200.0;
     public double worthDepth8 = 200.0;
     public double worthDepth12 = 200.0;
