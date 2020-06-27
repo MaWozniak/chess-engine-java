@@ -44,7 +44,7 @@ public class Algorithm2 {
 //
 //        Sort(8);
 //
-//        removeRepetitions(8);
+        removeRepetitions(4);
 
         //for depth8 s=5; depth12 s=3
         //DepthSecond(5, 12, color, version);
@@ -139,7 +139,7 @@ public class Algorithm2 {
 
             board.makeMove(sideA, sequences.get(i).move(0));
 
-            value1 = board.value(sideA);
+            value1 = board.valueSimple(sideA);
 
             if (value1 < -50) {
 
@@ -152,7 +152,7 @@ public class Algorithm2 {
 
                 board.makeMove(sideB, movesDepth2.get(j));
 
-                value2 = board.value(sideB);
+                value2 = board.valueSimple(sideB);
 
 
                 if (value2 > 50) {
@@ -212,8 +212,8 @@ public class Algorithm2 {
             for (int i = 0; i < sequences.size(); i++) {
                 sequences.get(i).move(0).introduce();
                 System.out.print("  valueBoard: " + df.format(sequences.get(i).firstValue) + "\t");
-                System.out.print("  responces: " + sequences.get(i).firstResponces.toString()+ "\t");
-                System.out.println("old values:\tworthDepth4: " + df.format(sequences.get(i).worthDepth4) + "\t");
+                // System.out.print("  responces: " + sequences.get(i).firstResponces.toString()+ "\t");
+                System.out.print("old values:\tworthDepth4: " + df.format(sequences.get(i).worthDepth4) + "\t");
                 System.out.print("\tbestBeta4 : " + df.format(sequences.get(i).bestBeta4) + "\t");
                 System.out.print("\tavrgBeta4 : " + df.format(sequences.get(i).avrgBeta4) + "\t");
                 System.out.print("\tcheck: " + sequences.get(i).check + " checkmate: " + sequences.get(i).checkmate + "\t");
@@ -469,7 +469,7 @@ public class Algorithm2 {
         double worthSeq = 200.0;
         double alpha = 200.0;
         double beta = 200.0;
-        double bestBeta = -200.0;
+        double bestBeta = 200.0;
         double worstBeta = 200.0;
         double avaregeBeta = 0.0;
         int counterBeta = 0;

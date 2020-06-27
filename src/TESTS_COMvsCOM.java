@@ -12,8 +12,9 @@ public class TESTS_COMvsCOM {
     private GameLog log = new GameLog();
     private Scanner reader = new Scanner(System.in);
 
-    private Algorithm2 algorithmW = new Algorithm2("positional1");
+    private Algorithm2 algorithmW = new Algorithm2("moves");
     private Algorithm algorithmB = new Algorithm("brute force");
+    //private Algorithm2 algorithmB = new Algorithm2("none");
 
     public static void main(String[] args) {
         new TESTS_COMvsCOM();

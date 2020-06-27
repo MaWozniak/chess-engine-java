@@ -192,24 +192,56 @@ public class Board {
 
         for (int i = 0; i < 19; i++) {
             whiteScore += whitePieces[i].getScore();
+//            if(this.version.equals("moves")) {
+//                whiteScore += (double)whitePieces[i].numberOfMoves(position, i, lastMove)/12;
+//            }
         }
         for (int i = 0; i < 19; i++) {
             blackScore += blackPieces[i].getScore();
-
+//            if(this.version.equals("moves")) {
+//                blackScore += (double)blackPieces[i].numberOfMoves(position, i, lastMove)/12;
+//            }
         }
+
+        if (this.version.equals("moves")) {
+            whiteScore += (double) this.numOfMoves('W') / 12;
+            blackScore += (double) this.numOfMoves('b') / 12;
+        }
+
 
 //        whiteScore += positionalValue('W');
 //        blackScore += positionalValue('B');
 
         if (color == 'W') {
             score = whiteScore - blackScore;
-           // score += positionalValue('W');
-           // score -= positionalValue('B')/5;
+            // score += positionalValue('W');
+            // score -= positionalValue('B')/5;
         }
         if (color == 'B') {
             score = blackScore - whiteScore;
-           // score += positionalValue('B');
-           // score -= positionalValue('W')/5;
+            // score += positionalValue('B');
+            // score -= positionalValue('W')/5;
+        }
+
+        return score;
+    }
+
+    public double valueSimple(char color) {
+        whiteScore = 0;
+        blackScore = 0;
+
+        for (int i = 0; i < 19; i++) {
+            whiteScore += whitePieces[i].getScore();
+        }
+        for (int i = 0; i < 19; i++) {
+            blackScore += blackPieces[i].getScore();
+        }
+
+        if (color == 'W') {
+            score = whiteScore - blackScore;
+        }
+        if (color == 'B') {
+            score = blackScore - whiteScore;
         }
 
         return score;
@@ -219,7 +251,7 @@ public class Board {
         whiteScore = 0;
         blackScore = 0;
 
-        if(positional) {
+        if (positional) {
             for (int i = 0; i < 19; i++) {
                 whiteScore += whitePieces[i].getScore();
             }
@@ -392,8 +424,8 @@ public class Board {
             }
             if(color == 'W') {
                 for (int i = 0; i < 19; i++) {
-                    if((whitePieces[i].getPosX() == x1)&&(whitePieces[i].getPosY() < y1)) {
-                        result ++;
+                    if ((whitePieces[i].getPosX() == x1) && (whitePieces[i].getPosY() < y1)) {
+                        result++;
                     }
                 }
             }
@@ -401,6 +433,24 @@ public class Board {
         }
         return result;
     }
+
+    public int numOfMoves(char color) {
+        this.createPositionsArray();
+        movesGenerate.clear();
+        if (color == 'W') {
+            for (int i = 0; i < 19; i++) {
+                movesGenerate.addAll(whitePieces[i].generateMoves(position, i, this.getLastMove()));
+            }
+        }
+        if (color == 'B') {
+            for (int i = 0; i < 19; i++) {
+                movesGenerate.addAll(blackPieces[i].generateMoves(position, i, this.getLastMove()));
+            }
+        }
+
+        return movesGenerate.size();
+    }
+
 
     public void generateMoves(char color, int movesDepth) {
         this.createPositionsArray();

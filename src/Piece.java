@@ -169,6 +169,12 @@ public class Piece {
         return movesGenerate;
     }
 
+    public int numberOfMoves(int[][] position, int numOfPiece, Move lastMove) {
+        ArrayList<Move> movesGenerate = this.generateMoves(position, numOfPiece, lastMove);
+        return movesGenerate.size();
+
+    }
+
     public double getScore() {
         double value = 0.0;
 

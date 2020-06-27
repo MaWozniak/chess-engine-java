@@ -9,7 +9,8 @@ public class TESTS_Human {
     private GameLog log = new GameLog();
     private Input input = new Input();
 
-    private Algorithm2 algorithm = new Algorithm2("brute force");
+    //private Algorithm3 algorithm = new Algorithm3("brute force");
+    private Algorithm2 algorithm = new Algorithm2("moves");
 
     public static void main(String[] args) {
         new TESTS_Human();
@@ -17,6 +18,7 @@ public class TESTS_Human {
 
     public TESTS_Human() {
 
+        //algorithm.board().copyBoard(tests.test8);
         algorithm.board().copyBoard(tests.test0);
 
         ListenForKeys lForKeys = new ListenForKeys();

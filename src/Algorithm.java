@@ -132,7 +132,7 @@ public class Algorithm {
 
             board.makeMove(sideA, sequences.get(i).move(0));
 
-            value1 = board.value(sideA);
+            value1 = board.valueSimple(sideA);
 
             if (value1 < -50) {
 
@@ -145,7 +145,7 @@ public class Algorithm {
 
                 board.makeMove(sideB, movesDepth2.get(j));
 
-                value2 = board.value(sideB);
+                value2 = board.valueSimple(sideB);
 
                 if (value2 > 50) {
 
