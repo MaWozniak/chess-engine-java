@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Utilities {
+public class Algorithm_OLD {
 
     public ArrayList<Sequence> sequences = new ArrayList<>();
     public ArrayList<Move> movesRecord = new ArrayList<>();
@@ -14,7 +14,7 @@ public class Utilities {
     private String version;
     private Board board;
 
-    public Utilities(String version) {
+    public Algorithm_OLD(String version) {
         board = new Board(version);
         this.version = version;
     }

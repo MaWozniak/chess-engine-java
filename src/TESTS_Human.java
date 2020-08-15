@@ -4,13 +4,10 @@ import java.awt.event.KeyListener;
 
 public class TESTS_Human {
 
-    private TestBoards tests = new TestBoards();
-    private BoardDisplay2 testDisplay = new BoardDisplay2();
-    private GameLog log = new GameLog();
-    private Input input = new Input();
-
-    //private Algorithm3 algorithm = new Algorithm3("brute force");
-    private Algorithm2 algorithm = new Algorithm2("moves");
+    private final BoardDisplay2 testDisplay = new BoardDisplay2();
+    private final GameLog log = new GameLog();
+    private final Input input = new Input();
+    private final Algorithm algorithm = new Algorithm("moves");
 
     public static void main(String[] args) {
         new TESTS_Human();
@@ -18,7 +15,7 @@ public class TESTS_Human {
 
     public TESTS_Human() {
 
-        //algorithm.board().copyBoard(tests.test8);
+        TestBoards tests = new TestBoards();
         algorithm.board().copyBoard(tests.test0);
 
         ListenForKeys lForKeys = new ListenForKeys();

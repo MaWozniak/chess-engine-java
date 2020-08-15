@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.util.Scanner;
 
 public class TESTS_COMvsCOM {
+    /*
     //in console:
     // c - whites make move
     // b - blacks make move
@@ -68,4 +69,6 @@ public class TESTS_COMvsCOM {
         }
 
     }
+
+     */
 }
